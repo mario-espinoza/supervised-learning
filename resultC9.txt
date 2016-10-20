@@ -1,4 +1,4 @@
-Reading model...done.
+Reading model...Reading model...done.
 Reading test examples... (585 examples) done.
 Classifying test examples...done
 Runtime (without IO) in cpu-seconds: 0.00

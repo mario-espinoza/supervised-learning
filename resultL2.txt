@@ -138,7 +138,7 @@ Norm of weight vector: |w|=260.41611
 Value of slack variable (on working set): xi=0.02146
 Value of slack variable (global): xi=0.08849
 Norm of longest difference vector: ||Psi(x,y)-Psi(x,ybar)||=0.54262
-Runtime in cpu-seconds: 0.06
+Runtime in cpu-seconds: 0.07
 Final number of constraints in cache: 315
 Compacting linear model...done
 Writing learned model...done

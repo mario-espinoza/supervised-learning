@@ -34,8 +34,9 @@ with open('marioEspinoza.csv', 'rb') as csvfile:
     print 'Total Clases: {}'.format(sum(Counter(classSummary).values()))
 
     for n in range(0,10):
-        trainFile = open('train{}.dat'.format(n),'w+')
-        testFile = open('test{}.dat'.format(n),'w+')
+        trainFile = open('train{}.txt'.format(n),'w+')
+        testFile = open('test{}.txt'.format(n),'w+')
+        completefile = open('complete{}.txt'.format(n),'w+')
 
         for i,v in enumerate(bagsofwords):
 
@@ -59,13 +60,13 @@ with open('marioEspinoza.csv', 'rb') as csvfile:
         testFile.close
         trainFile.close
 
-    for x in range(0,9):
-        modelFile = open('model{}.dat'.format(x),'w+')
-        predictionsFile = open('predictions{}.dat'.format(x),'w+')
+    for x in range(0,10):
+        modelFile = open('model{}.txt'.format(x),'w+')
+        predictionsFile = open('predictions{}.txt'.format(x),'w+')
         # importer = 'bin/mallet import-svmlight --input archivoEntrenamiento%s.txt --output training%s.mallet' % (x,x)
-        learn='../svm_multiclass_learn -c 5000 train{}.dat model{}.dat >> resultL{}.txt'.format(x,x,x)
+        learn='../SVM/svm_multiclass/svm_multiclass_learn -c 5000 train{}.txt model{}.txt >> resultL{}.txt'.format(x,x,x)
         print learn
-        classify='../svm_multiclass_classify ./test{}.dat ./model{}.dat ./predictions{}.dat >> resultC{}.txt'.format(x,x,x,x)
+        classify='../SVM/svm_multiclass/svm_multiclass_classify ./test{}.txt ./model{}.txt ./predictions{}.txt >> resultC{}.txt'.format(x,x,x,x)
         print classify
         os.system(learn)
         print 'learn ready'

@@ -7,13 +7,22 @@ classSummary=[]
 
 def parseBags(row,list,classes):
     title = row[2].lstrip().rstrip()
+    try:
+        body = row[3].lstrip().rstrip()
+        text = title + ' ' +body
+    except IndexError:
+        text = title
+
     className = row[1]
+
     # classID = classEnum.get(className)
 
-    bagofwords = collections.Counter(re.findall(r'\w+', title.lower()))
+    # bagofwords = collections.Counter(re.findall(r'[a-zA-Z]\w*', text.lower()))
+    bagofwords = collections.Counter(re.findall(r'\w+', text.lower()))
     list.append(bagofwords)
     classes.append(className)
     classSummary.append(className)
+    #
     # print title
     # print bagofwords
 
@@ -28,15 +37,23 @@ with open('marioEspinoza.csv', 'rb') as csvfile:
     mostCommon = sumbags.most_common()
     # print 'Dimensions: {}'.format(len(sumbags))
     # print 'Sumbags: {}'.format(sumbags)
-    # print 'Most common: {}'.format(mostCommon)
+    print 'Most common: {}'.format(mostCommon)
 
-    print 'Total Clases: {}'.format(Counter(classSummary))
-    print 'Total Clases: {}'.format(sum(Counter(classSummary).values()))
+    bagFile = open('bagofwords.csv','w+')
 
+    for word,count in mostCommon:
+        bagFile.write('{},{}\n'.format(word,count))
+    bagFile.close
+
+    print 'Total Class summary: {}'.format(Counter(classSummary))
+    print 'Total Clases: {}'.format(Counter(classSummary).values())
+    print 'Total Count: {}'.format(sum(Counter(classSummary).values()))
+
+    completefile = open('complete.txt','w+')
     for n in range(0,10):
         trainFile = open('train{}.txt'.format(n),'w+')
         testFile = open('test{}.txt'.format(n),'w+')
-        completefile = open('complete{}.txt'.format(n),'w+')
+        segmentedFile = open('segmentedFile{}.txt'.format(n),'w+')
 
         for i,v in enumerate(bagsofwords):
 
@@ -56,6 +73,8 @@ with open('marioEspinoza.csv', 'rb') as csvfile:
                 trainFile.write(fileLine+'\n')
             else:
                 testFile.write(fileLine+'\n')
+            completefile.write(fileLine+'\n')
+            segmentedFile.write(fileLine+'\n')
 
         testFile.close
         trainFile.close
